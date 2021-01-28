@@ -5,5 +5,10 @@ router.use(bodyParser.json());
 router.post("/signup", userController.signUp);
 router.post("/login", userController.login);
 router.get("/logout",userController.logout);
+router.get("/logout",userController.update);
+
+
+
+
 //update profile
 module.exports = router;
