@@ -1,7 +1,7 @@
 
 const validator = require('validator')
 //const User = require()
-const auth=require('../middlewares/auth')
+const auth=require('../../middlewares/auth')
 
  
 
