@@ -1,6 +1,10 @@
-"use strict";
-const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
+
+const { Sequelize, DataTypes, Model } = require("sequelize");
+const sequelize = require('../sequelize')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const jwt=require('jsonwebtoken')
+
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -13,9 +17,21 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(Contact_list, { foreignKey: "contact_id" });
     }
     toJSON() {
-      //returns
+      const user=this
+      delete user.dataValues.password
+      return user.dataValues
     }
+    generateAuthToken= async function(){
+      const user=this
+      const token=jwt.sign({email:user.email.toString()},'secret_key')  
+      await user.save()
+      return token
   }
+
+
+  }
+
+  
   User.init(
     {
       email: DataTypes.STRING,
@@ -23,11 +39,26 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       status: DataTypes.STRING,
       username: DataTypes.STRING,
+    
+     
+      
     },
     {
       sequelize,
       modelName: "User",
     }
   );
-  return User;
-};
+
+
+
+// hashing passwords before saving into db
+User.addHook('beforeSave',async (user, options) => {
+
+  if (user.changed('password')) {
+      user.password = await bcrypt.hash(user.password, 8)
+
+  }
+});
+
+
+module.exports=User
