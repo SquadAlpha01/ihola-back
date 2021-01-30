@@ -1,24 +1,25 @@
 
 const validator = require('validator')
-//const User = require()
+const User=require('../../db/models/user')
 const auth=require('../../middlewares/auth')
 
  
 
 
 const signUp= async (req, res) => {
-    //const user = new User(req.body)
+    
 
     try {
-        //if save is implemented in generateAuthToken() then remove this line
+        const user = new User(req.body)
+        const token=await user.generateAuthToken()
         await user.save()
-
-       // const token=await user.generateAuthToken()
         res.status(201).send({user,token})
+     
        
     }
     catch (e) {
-        res.status(400).send(e)
+        console.log(e)
+       res.status(400).send(e)
     }
    
 }

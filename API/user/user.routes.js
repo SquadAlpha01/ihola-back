@@ -3,12 +3,12 @@ const bodyParser = require("body-parser");
 const userController = require("./user.controller");
 router.use(bodyParser.json());
 router.post("/signup", userController.signUp);
-router.post("/login", userController.login);
-router.get("/logout",userController.logout);
-router.get("/logout",userController.update);
+// router.post("/login", userController.login);
+// router.get("/logout",userController.logout);
+// router.get("/logout",userController.update);
 
 
 
 
-//update profile
+
 module.exports = router;
