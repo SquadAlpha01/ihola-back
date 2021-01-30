@@ -9,12 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       chat_session_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       owner: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       contact_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {

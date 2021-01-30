@@ -1,6 +1,6 @@
 
 const validator = require('validator')
-const User=require('../../db/models/user')
+const {User}=require('../../db/models/')
 const auth=require('../../middlewares/auth')
 
  

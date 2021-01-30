@@ -9,16 +9,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User, Chat_session }) {
       // define association here
-      this.belongsTo(User, { foreignKey: "owner"});
+      this.belongsTo(User, { foreignKey: "owner" });
       this.belongsTo(User, { foreignKey: "contact_id" });
       this.belongsTo(Chat_session, { foreignKey: "chat_session_id" });
     }
   }
   Contact_list.init(
     {
-      chat_session_id: DataTypes.INTEGER,
-      owner: DataTypes.INTEGER,
-      contact_id: DataTypes.INTEGER,
+      chat_session_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      owner: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      contact_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,
