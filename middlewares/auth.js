@@ -1,15 +1,16 @@
 const jwt=require('jsonwebtoken')
-//const User=require()
+const {User}=require('../db/models/')
 
 const auth=async(req,res,next)=>{
 
 try {
+  
     const token=req.header('Authorization').replace('Bearer ','')
-    const decoded=jwt.verify(token,'secret_key')
-    const user=await User.findOne({email:decoded.email})
+    const decoded=jwt.verify(token,'secret_key')   
+    const user=await User.findOne({ where: {email:decoded.email,token}})
+
     if(!user){
         throw new Error()
-
     }
     req.token=token
     req.user=user

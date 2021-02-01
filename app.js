@@ -5,6 +5,10 @@ const {sequelize} = require('./db/models');
 const userRouter = require("./API/user/user.routes");
 //const contactRouter = require("./API/contact/contact.routes");
 //const chatRouter = require("./API/chat/chat.routes");
+
+
+
+
 const app = express();
 const port = process.env.PORT || 3000
  app.use("/user", userRouter);
@@ -14,6 +18,8 @@ const port = process.env.PORT || 3000
 
 app.listen(port, async () =>{
   console.log(`running on port: ${port}`);
+  //await sequelize.sync()
   await sequelize.authenticate();
+  
 }
 );

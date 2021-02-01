@@ -1,7 +1,5 @@
-
-const validator = require('validator')
 const {User}=require('../../db/models/')
-const auth=require('../../middlewares/auth')
+
 
  
 
@@ -18,8 +16,7 @@ const signUp= async (req, res) => {
        
     }
     catch (e) {
-        console.log(e)
-       res.status(400).send(e)
+       res.status(400).send()
     }
    
 }
@@ -28,8 +25,8 @@ const signUp= async (req, res) => {
 const login=async(req,res)=>{
 
     try {
-        //const user= await User.findByCredentials(req.body.email,req.body.password)
-       // const token=await user.generateAuthToken()
+        const user= await User.findByCredentials(req.body.email,req.body.password)
+        const token=await user.generateAuthToken()
         res.send({user,token})
         
     } catch (e) {
@@ -45,9 +42,7 @@ const logout=async(req,res)=>{
 
     try {
         
-        // req.user.tokens=req.user.tokens.filter((token)=>{
-        //     return token.token!==req.token
-        // })
+        req.user.token=null
         await req.user.save()
         res.send()
     } catch (e) {
@@ -59,10 +54,10 @@ const logout=async(req,res)=>{
 
 
 
-//missing updating image
+
 const update=async (req, res) => {
     const updateKeys = Object.keys(req.body)
-    const allowedUpdates = ['username', 'email', 'password']
+    const allowedUpdates = ['username', 'email', 'password','status','image']
     const isValidOperation = updateKeys.every((update) => allowedUpdates.includes(update))
     if (!isValidOperation) {
         return res.status(400).send({ error: 'Invalid updates keys!' })
@@ -71,11 +66,8 @@ const update=async (req, res) => {
     try {
         const user =req.user
         updateKeys.forEach((update)=>user[update]=req.body[update])
-       // await user.save()
-
-       
-
-            res.send(user)
+        await user.save()
+        res.send(user)
         
     }
     catch (e) {
