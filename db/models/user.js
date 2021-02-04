@@ -43,11 +43,23 @@ class User extends Model {
 
         throw new Error('Unable to login')
     }
-
     return user
+  }
 
-}
-
+  //Get user by username :: called by contact.searchContacts 
+  static findByUsername = async(usernameToSearch)=> {
+    var user = await User.findOne({where:{username:usernameToSearch}})
+    if (!user){
+      return {found:false, user:'User Not Found'};
+    }
+    user = {
+      email: user.email,
+      image: user.image,
+      status: user.status,
+      username: user.username
+    }
+    return {found:true, user:user}
+  }
 }
 
 User.init(
