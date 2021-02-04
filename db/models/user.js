@@ -56,7 +56,8 @@ class User extends Model {
       email: user.email,
       image: user.image,
       status: user.status,
-      username: user.username
+      username: user.username, 
+      id: user.id
     }
     return {found:true, user:user}
   }
