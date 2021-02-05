@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User, { foreignKey: "contact_id" });
       this.belongsTo(Chat_session, { foreignKey: "chat_session_id" });
     }
+    static getMyContacts = async (userID) => {
+      var contacts = await Contact_list.findAll({
+        where: {
+          owner: userID
+        }
+      });
+      return contacts
+    }
   }
   Contact_list.init(
     {

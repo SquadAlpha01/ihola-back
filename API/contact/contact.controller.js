@@ -39,11 +39,19 @@ async function createChatSession() {
     return currentChatSession.id
 }
 
-// const getMyChats = async (req, res) => {
-// }
+const getMyContacts = async (req, res) => {
+    try{ 
+        const contacts = await Contact_list.getMyContacts(req.query.userID)
+        res.send(contacts)
+    }
+    catch(e){
+        console.log(e)
+        res.status(400).send()
+    }
+}
 
 
 
 module.exports.searchContacts = searchContacts
 module.exports.addContact = addContact
-// module.exports.getMyChats = getMyChats
+module.exports.getMyContacts = getMyContacts
